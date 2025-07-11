@@ -2,19 +2,39 @@
 
 const ErrorMessage = ({ message, details, onRetry }) => {
   return (
-    <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-center">
-      <div className="text-red-500 text-2xl mb-2">⚠️</div>
-      <h3 className="text-lg font-semibold text-red-800 mb-2">
-        Oops! Algo deu errado
+    <div style={{
+      backgroundColor: '#fef2f2',
+      border: '1px solid #fecaca',
+      borderRadius: '8px',
+      padding: '16px',
+      textAlign: 'center',
+      margin: '16px'
+    }}>
+      <div style={{ fontSize: '32px', marginBottom: '8px' }}>⚠️</div>
+      <h3 style={{ 
+        fontSize: '18px', 
+        fontWeight: '600', 
+        color: '#991b1b', 
+        marginBottom: '8px' 
+      }}>
+        Algo deu errado
       </h3>
-      <p className="text-red-600 mb-2">{message}</p>
+      <p style={{ color: '#dc2626', marginBottom: '8px' }}>{message}</p>
       {details && (
-        <p className="text-red-500 text-sm opacity-75">{details}</p>
+        <p style={{ color: '#ef4444', fontSize: '14px', opacity: '0.75' }}>{details}</p>
       )}
       {onRetry && (
         <button 
           onClick={onRetry}
-          className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
+          style={{
+            marginTop: '16px',
+            backgroundColor: '#dc2626',
+            color: 'white',
+            padding: '8px 16px',
+            borderRadius: '4px',
+            border: 'none',
+            cursor: 'pointer'
+          }}
         >
           🔄 Tentar Novamente
         </button>

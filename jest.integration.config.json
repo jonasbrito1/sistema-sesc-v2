@@ -1,0 +1,9 @@
+﻿{
+  "testMatch": ["**/tests/integration/**/*.test.js"],
+  "testEnvironment": "node",
+  "setupFilesAfterEnv": [],
+  "collectCoverageFrom": [
+    "backend/src/**/*.js",
+    "!backend/src/config/**"
+  ]
+}
