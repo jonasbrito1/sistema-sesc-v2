@@ -1,4 +1,4 @@
-const { Responsavel } = require('../models');
+﻿const { Responsavel } = require('../models');
 
 class ResponsavelController {
   async criar(req, res) {
@@ -142,3 +142,5 @@ class ResponsavelController {
     }
   }
 }
+
+module.exports = new ResponsavelController();

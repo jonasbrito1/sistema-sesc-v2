@@ -9,7 +9,7 @@ class EmailService {
       return;
     }
 
-    this.transporter = nodemailer.createTransport({  // ← Corrigido: createTransport
+    this.transporter = nodemailer.createTransport({  
       host: process.env.SMTP_HOST,
       port: process.env.SMTP_PORT,
       secure: process.env.SMTP_PORT == 465,

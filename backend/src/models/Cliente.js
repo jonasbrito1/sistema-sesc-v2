@@ -1,22 +1,13 @@
-// backend/src/models/Cliente.js
-const { db } = require('../config/firebase');
-const { 
-  collection, 
-  addDoc, 
-  getDocs, 
-  doc, 
-  updateDoc, 
-  deleteDoc, 
-  getDoc, 
-  query, 
-  where,
-  orderBy,
-  limit 
-} = require('firebase/firestore');
+const admin = require('firebase-admin');
 
 class Cliente {
   constructor() {
     this.collectionName = 'clientes';
+  }
+
+  // Obter referência da coleção
+  getCollection() {
+    return admin.firestore().collection(this.collectionName);
   }
 
   /**
@@ -41,11 +32,11 @@ class Cliente {
         CEP: dadosCliente.CEP.replace(/\D/g, ''), // Remove formatação do CEP
         EMAIL: dadosCliente.EMAIL || '',
         TELEFONE: dadosCliente.TELEFONE || '',
-        DATA_CRIACAO: new Date().toISOString(),
+        DATA_CRIACAO: admin.firestore.FieldValue.serverTimestamp(),
         STATUS: 'ATIVO'
       };
       
-      const docRef = await addDoc(collection(db, this.collectionName), cliente);
+      const docRef = await this.getCollection().add(cliente);
       
       return { 
         ID_CLIENTE: docRef.id, 
@@ -64,29 +55,29 @@ class Cliente {
    */
   async buscarTodos(filtros = {}) {
     try {
-      let q = collection(db, this.collectionName);
+      let query = this.getCollection();
       
       // Aplicar filtros se fornecidos
       if (filtros.status) {
-        q = query(q, where("STATUS", "==", filtros.status));
+        query = query.where("STATUS", "==", filtros.status);
       }
       
       if (filtros.cidade) {
-        q = query(q, where("CIDADE", "==", filtros.cidade));
+        query = query.where("CIDADE", "==", filtros.cidade);
       }
 
       // Ordenar por data de criação (mais recentes primeiro)
-      q = query(q, orderBy("DATA_CRIACAO", "desc"));
+      query = query.orderBy("DATA_CRIACAO", "desc");
 
       // Limitar resultados se especificado
       if (filtros.limite) {
-        q = query(q, limit(parseInt(filtros.limite)));
+        query = query.limit(parseInt(filtros.limite));
       }
 
-      const querySnapshot = await getDocs(q);
-      const clientes = querySnapshot.docs.map(docSnapshot => ({
-        ID_CLIENTE: docSnapshot.id,
-        ...docSnapshot.data()
+      const querySnapshot = await query.get();
+      const clientes = querySnapshot.docs.map(doc => ({
+        ID_CLIENTE: doc.id,
+        ...doc.data()
       }));
 
       return {
@@ -109,15 +100,14 @@ class Cliente {
         throw new Error('ID do cliente é obrigatório');
       }
 
-      const docRef = doc(db, this.collectionName, id);
-      const docSnap = await getDoc(docRef);
+      const doc = await this.getCollection().doc(id).get();
       
-      if (docSnap.exists()) {
+      if (doc.exists) {
         return {
           success: true,
           data: {
-            ID_CLIENTE: docSnap.id,
-            ...docSnap.data()
+            ID_CLIENTE: doc.id,
+            ...doc.data()
           }
         };
       } else {
@@ -137,12 +127,9 @@ class Cliente {
    */
   async buscarPorEmail(email) {
     try {
-      const q = query(
-        collection(db, this.collectionName),
-        where("EMAIL", "==", email)
-      );
-      
-      const querySnapshot = await getDocs(q);
+      const querySnapshot = await this.getCollection()
+        .where("EMAIL", "==", email)
+        .get();
       
       if (!querySnapshot.empty) {
         const doc = querySnapshot.docs[0];
@@ -188,10 +175,9 @@ class Cliente {
         dadosParaAtualizar.CEP = dadosParaAtualizar.CEP.replace(/\D/g, '');
       }
 
-      dadosParaAtualizar.DATA_ATUALIZACAO = new Date().toISOString();
+      dadosParaAtualizar.DATA_ATUALIZACAO = admin.firestore.FieldValue.serverTimestamp();
 
-      const docRef = doc(db, this.collectionName, id);
-      await updateDoc(docRef, dadosParaAtualizar);
+      await this.getCollection().doc(id).update(dadosParaAtualizar);
       
       return {
         success: true,
@@ -224,10 +210,9 @@ class Cliente {
       }
 
       // Soft delete - apenas marca como inativo
-      const docRef = doc(db, this.collectionName, id);
-      await updateDoc(docRef, {
+      await this.getCollection().doc(id).update({
         STATUS: 'INATIVO',
-        DATA_EXCLUSAO: new Date().toISOString()
+        DATA_EXCLUSAO: admin.firestore.FieldValue.serverTimestamp()
       });
       
       return {
@@ -249,8 +234,7 @@ class Cliente {
         throw new Error('ID do cliente é obrigatório');
       }
 
-      const docRef = doc(db, this.collectionName, id);
-      await deleteDoc(docRef);
+      await this.getCollection().doc(id).delete();
       
       return {
         success: true,
@@ -358,13 +342,11 @@ class Cliente {
    */
   async buscarPorCidade(cidade) {
     try {
-      const q = query(
-        collection(db, this.collectionName),
-        where("CIDADE", "==", cidade),
-        where("STATUS", "==", "ATIVO")
-      );
+      const querySnapshot = await this.getCollection()
+        .where("CIDADE", "==", cidade)
+        .where("STATUS", "==", "ATIVO")
+        .get();
       
-      const querySnapshot = await getDocs(q);
       const clientes = querySnapshot.docs.map(doc => ({
         ID_CLIENTE: doc.id,
         ...doc.data()

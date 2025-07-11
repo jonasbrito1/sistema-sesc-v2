@@ -1,4 +1,4 @@
-// backend/src/models/index.js
+﻿// backend/src/models/index.js
 const Cliente = require('./Cliente');
 const Atividade = require('./Atividade');
 const Responsavel = require('./Responsavel');

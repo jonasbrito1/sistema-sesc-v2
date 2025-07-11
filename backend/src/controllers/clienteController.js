@@ -1,4 +1,5 @@
-const { Cliente } = require('../models');
+﻿// backend/src/controllers/clienteController.js
+const Cliente = require('../models/Cliente');
 const axios = require('axios');
 
 class ClienteController {
@@ -188,3 +189,5 @@ class ClienteController {
     }
   }
 }
+
+module.exports = new ClienteController();
