@@ -1,0 +1,39 @@
+{
+  "name": "sesc-inscricoes",
+  "version": "1.0.0",
+  "description": "Sistema de Inscrições SESC - Plataforma completa para gerenciamento de atividades",
+  "private": true,
+  "scripts": {
+    "install:all": "cd backend && npm install && cd ../frontend && npm install",
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm start",
+    "build": "cd backend && npm run build && cd ../frontend && npm run build",
+    "test": "cd backend && npm test && cd ../frontend && npm test -- --coverage --watchAll=false",
+    "test-firebase": "node scripts/test-firebase.js",
+    "create-admin": "node scripts/create-admin.js",
+    "lint": "cd backend && npm run lint && cd ../frontend && npm run lint",
+    "start": "cd backend && npm start"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sesc-am/sistema-inscricoes.git"
+  },
+  "keywords": [
+    "sesc",
+    "inscricoes",
+    "atividades",
+    "react",
+    "node",
+    "firebase"
+  ],
+  "author": "SESC Amazonas",
+  "license": "MIT"
+}

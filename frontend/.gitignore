@@ -1,0 +1,9 @@
+@"
+node_modules/
+.cache/
+dist/
+build/
+*.log
+.env
+.env.local
+"@ | Out-File -FilePath "frontend\.gitignore" -Encoding UTF8

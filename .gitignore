@@ -1,0 +1,172 @@
+# ================================================
+# CREDENCIAIS E SECRETS (NUNCA COMMITAR!)
+# ================================================
+.env
+.env.local
+.env.production
+.env.development
+.env.test
+.env.*.local
+*.pem
+*.key
+*.p12
+*.pfx
+config.json
+secrets.json
+
+# Firebase
+firebase-adminsdk-*.json
+serviceAccountKey.json
+google-services.json
+GoogleService-Info.plist
+
+# ================================================
+# NODE.JS
+# ================================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory
+coverage/
+*.lcov
+.nyc_output
+
+# Build outputs
+build/
+dist/
+out/
+
+# Cache
+.cache/
+.npm/
+.eslintcache
+
+# ================================================
+# REACT / FRONTEND
+# ================================================
+# Build directory (já incluído acima)
+# .env files (já incluídos acima)
+
+# Static files that shouldn't be tracked
+public/hot
+public/storage
+bootstrap/cache
+
+# ================================================
+# LOGS
+# ================================================
+logs/
+*.log
+
+# ================================================
+# OS GENERATED FILES (WINDOWS/MAC/LINUX)
+# ================================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# ================================================
+# IDEs E EDITORES
+# ================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.sublime-project
+.sublime-workspace
+
+# Vim
+*.un~
+Session.vim
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ================================================
+# ARQUIVOS DE TESTE E DESENVOLVIMENTO
+# ================================================
+teste-firebase.js
+test-*.js
+debug-*.js
+playground/
+sandbox/
+
+# ================================================
+# TEMPORARY FILES
+# ================================================
+*.tmp
+*.temp
+temp/
+tmp/
+
+# ================================================
+# DADOS LOCAIS
+# ================================================
+uploads/
+storage/
+data/
+*.db
+*.sqlite
+*.sqlite3
+
+# ================================================
+# BACKUP FILES
+# ================================================
+*.backup
+*.bak
+*.orig
+
+# ================================================
+# PACKAGE MANAGER LOCKS (OPCIONAL)
+# ================================================
+# Descomente se quiser ignorar lock files
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
